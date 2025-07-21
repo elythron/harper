@@ -10,7 +10,6 @@ use crate::patterns::UPOSSet;
 use crate::patterns::WordSet;
 use crate::starts_with_vowel::starts_with_vowel;
 
-use super::am_in_the_morning;
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
 pub struct MissingArticle {
@@ -28,6 +27,7 @@ impl Default for MissingArticle {
             .then(|tok: &Token, _: &[char]| {
                 tok.kind.is_upos(UPOS::VERB)
                     && !tok.kind.is_verb_progressive_form()
+                    && !tok.kind.is_linking_verb()
                     && !tok.kind.is_auxiliary_verb()
             })
             .t_ws()
