@@ -884,17 +884,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     441 | when the race was over. However, when they had been running half an hour or so,
-         |                                                             ^~~~ Consider adding an article before this noun.
-     442 | and were quite dry again, the Dodo suddenly called out “The race is over!” and
-Suggest:
-  - Replace with: “a half”
-  - Replace with: “the half”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      445 | This question the Dodo could not answer without a great deal of thought, and it
@@ -960,17 +949,6 @@ Message: |
 Suggest:
   - Replace with: “a wrapping”
   - Replace with: “the wrapping”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     544 | hurried off at once: one old Magpie began wrapping itself up very carefully,
-     545 | remarking, “I really must be getting home; the night-air doesn’t suit my
-         |                                      ^~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a home”
-  - Replace with: “the home”
 
 
 
@@ -1318,17 +1296,6 @@ Suggest:
   - Replace with: “lean”
   - Replace with: “learnt”
   - Replace with: “least”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     778 | buttercup to rest herself, and fanned herself with one of the leaves: “I should
-     779 | have liked teaching it tricks very much, if—if I’d only been the right size to
-         |            ^~~~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a teaching”
-  - Replace with: “the teaching”
 
 
 
@@ -2257,16 +2224,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-    1993 | care of the sense, and the sounds will take care of themselves.’”
-         |                                             ^~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a care”
-  - Replace with: “the care”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2004 | “Very true,” said the Duchess: “flamingoes and mustard both bite. And the moral
@@ -2322,16 +2279,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     2066 | Queen merely remarking that a moment’s delay would cost them their lives.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-    2064 | The other guests had taken advantage of the Queen’s absence, and were resting in
-         |                            ^~~~~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “an advantage”
-  - Replace with: “the advantage”
 
 
 

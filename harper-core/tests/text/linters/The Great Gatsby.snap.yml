@@ -552,17 +552,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     163 | of thirty with a rather hard mouth and a supercilious manner. Two shining
-     164 | arrogant eyes had established dominance over his face and gave him the
-         |                               ^~~~~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a dominance”
-  - Replace with: “the dominance”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      165 | appearance of always leaning aggressively forward. Not even the effeminate swank
@@ -1040,17 +1029,6 @@ Message: |
 Suggest:
   - Replace with: “a side”
   - Replace with: “the side”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     616 | The fact that gossip had published the banns was one of the reasons I had come
-     617 | East. You can’t stop going with an old friend on account of rumors, and on the
-         | ^~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “an East”
-  - Replace with: “the East”
 
 
 
@@ -1771,17 +1749,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1132 | trying to spread a copy of Town Tattle over the tapestry scenes of Versailles.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 59 words long.
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-    1128 | awoke from his doze and started in a daze toward the door. When he had gone half
-         |                                                                             ^~~~ Consider adding an article before this noun.
-    1129 | way he turned around and stared at the scene—his wife and Catherine scolding and
-Suggest:
-  - Replace with: “a half”
-  - Replace with: “the half”
 
 
 
@@ -4367,16 +4334,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-    2390 | After you had gone home she came into my room and woke me up, and said: “What
-         |                    ^~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a home”
-  - Replace with: “the home”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2395 | When Jordan Baker had finished telling all this we had left the Plaza for half
@@ -6861,17 +6818,6 @@ Suggest:
 Lint:    Miscellaneous (0 priority)
 Message: |
     4528 | Some words of this conversation must have reached Wilson, swaying in the office
-         |                                                   ^~~~~~ Consider adding an article before this noun.
-    4529 | door, for suddenly a new theme found voice among his gasping cries:
-Suggest:
-  - Replace with: “a Wilson”
-  - Replace with: “the Wilson”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-    4528 | Some words of this conversation must have reached Wilson, swaying in the office
     4529 | door, for suddenly a new theme found voice among his gasping cries:
          |                                      ^~~~~ Consider adding an article before this noun.
 Suggest:
@@ -8692,17 +8638,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5819 | in history with something commensurate to his capacity for wonder.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 70 words long.
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-    5814 | green breast of the new world. Its vanished trees, the trees that had made way
-         |                                                                            ^~~ Consider adding an article before this noun.
-    5815 | for Gatsby’s house, had once pandered in whispers to the last and greatest of
-Suggest:
-  - Replace with: “a way”
-  - Replace with: “the way”
 
 
 

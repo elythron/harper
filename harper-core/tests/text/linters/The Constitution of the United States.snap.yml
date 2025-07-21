@@ -441,17 +441,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     166 | law, varying the compensation for the services of the Senators and
-     167 | Representatives, shall take effect, until an election of Representatives shall
-         |                             ^~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “an effect”
-  - Replace with: “the effect”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      177 | Every Bill which shall have passed the House of Representatives and the Senate,
@@ -522,17 +511,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      198 | to the Rules and Limitations prescribed in the Case of a Bill.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 78 words long.
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     195 | shall be presented to the President of the United States; and before the Same
-     196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
-         |            ^~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “an Effect”
-  - Replace with: “the Effect”
 
 
 
@@ -957,16 +935,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     360 | elect shall have died, the Vice President elect shall become President. If a
-         |                                                              ^~~~~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a President”
-  - Replace with: “the President”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      360 | elect shall have died, the Vice President elect shall become President. If a
@@ -1057,17 +1025,6 @@ Message: |
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     398 | than two years of a term to which some other person was elected President shall
-         |                                                                 ^~~~~~~~~ Consider adding an article before this noun.
-     399 | be elected to the office of the President more than once. But this article
-Suggest:
-  - Replace with: “a President”
-  - Replace with: “the President”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      399 | be elected to the office of the President more than once. But this article
@@ -1093,27 +1050,6 @@ Message: |
 Suggest:
   - Replace with: “an operative”
   - Replace with: “the operative”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     409 | death or resignation, the Vice President shall become President.
-         |                                                       ^~~~~~~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a President”
-  - Replace with: “the President”
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     412 | shall nominate a Vice President who shall take office upon confirmation by a
-         |                                                ^~~~~~ Consider adding an article before this noun.
-     413 | majority vote of both Houses of Congress.
-Suggest:
-  - Replace with: “an office”
-  - Replace with: “the office”
 
 
 
@@ -1402,16 +1338,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      511 | Commission all the Officers of the United States.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 97 words long.
-
-
-
-Lint:    Miscellaneous (0 priority)
-Message: |
-     510 | Ministers; he shall take Care that the Laws be faithfully executed, and shall
-         |                          ^~~~ Consider adding an article before this noun.
-Suggest:
-  - Replace with: “a Care”
-  - Replace with: “the Care”
 
 
 

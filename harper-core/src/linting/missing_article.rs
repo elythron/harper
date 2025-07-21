@@ -21,7 +21,7 @@ impl Default for MissingArticle {
     fn default() -> Self {
         let expr = SequenceExpr::default()
             .then_unless(
-                UPOSSet::new(&[UPOS::DET, UPOS::ADJ, UPOS::ADV, UPOS::PRON])
+                UPOSSet::new(&[UPOS::DET, UPOS::ADJ, UPOS::ADV, UPOS::PRON, UPOS::AUX])
                     .or(WordSet::new(&["means"])),
             )
             .t_ws()

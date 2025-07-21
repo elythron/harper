@@ -19,17 +19,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-      38 | The earliest foundations of what would become computer science predate the
-         |                                               ^~~~~~~~ Consider adding an article before this noun.
-      39 | invention of the modern digital computer. Machines for calculating fixed
-Suggest:
-  - Replace with: “a computer”
-  - Replace with: “the computer”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
       45 | Wilhelm Schickard designed and constructed the first working mechanical

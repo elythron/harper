@@ -578,17 +578,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (0 priority)
-Message: |
-     209 | nearest-neighbor have all been tried, and most can achieve accuracy above
-         |                                                            ^~~~~~~~ Consider adding an article before this noun.
-     210 | 95%.[citation needed]
-Suggest:
-  - Replace with: “an accuracy”
-  - Replace with: “the accuracy”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      213 | Wiki. This comparison uses the Penn tag set on some of the Penn Treebank data,
