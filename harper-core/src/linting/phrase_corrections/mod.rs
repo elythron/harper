@@ -980,7 +980,7 @@ pub fn lint_group() -> LintGroup {
             ["it an"],
             ["it's an", "it is an"],
             "Add the missing verb.",
-            "`it an` omits the copular verb; use **`it's an`** or **`it is an`** to supply `is` and keep the correct article before a vowel sound."
+            "`it an` omits the verb; use **`it's an`** or **`it is an`** to supply `is` and keep the correct article before a vowel sound."
         ),
     });
 
