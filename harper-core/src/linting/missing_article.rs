@@ -206,4 +206,28 @@ mod tests {
             MissingArticle::default(),
         );
     }
+
+    #[test]
+    fn allows_sustenance() {
+        assert_no_lints(
+            "One map charted the altered migratory patterns of the local bee population, demonstrating how the reduction in flowering trees had forced them to seek sustenance elsewhere.",
+            MissingArticle::default(),
+        );
+    }
+
+    #[test]
+    fn allow_proper_noun() {
+        assert_no_lints(
+            "Thank you for considering a gift to Harmony Bridge",
+            MissingArticle::default(),
+        );
+    }
+
+    #[test]
+    fn allow_competition() {
+        assert_no_lints(
+            "The special events throughout the week include a tractor pull competition.",
+            MissingArticle::default(),
+        );
+    }
 }
