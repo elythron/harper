@@ -81,6 +81,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+      28 | insurrection or rebellion against the same, or given aid or comfort to the
+         |                                                      ^~~ Consider adding an article before this noun.
+      29 | enemies thereof. But Congress may, by a vote of two-thirds of each House,
+Suggest:
+  - Replace with: “an aid”
+  - Replace with: “the aid”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       38 | The House of Representatives shall be composed of Members
@@ -430,6 +441,17 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     166 | law, varying the compensation for the services of the Senators and
+     167 | Representatives, shall take effect, until an election of Representatives shall
+         |                             ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an effect”
+  - Replace with: “the effect”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      177 | Every Bill which shall have passed the House of Representatives and the Senate,
@@ -503,6 +525,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     195 | shall be presented to the President of the United States; and before the Same
+     196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
+         |            ^~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an Effect”
+  - Replace with: “the Effect”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
      196 | shall take Effect, shall be approved by him, or being disapproved by him, shall
@@ -560,12 +593,52 @@ Suggest:
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     207 | 1. To borrow Money on the credit of the United States;
+         |              ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Money”
+  - Replace with: “the Money”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     209 | 2. To regulate Commerce with foreign Nations, and among the several States, and
+         |                ^~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Commerce”
+  - Replace with: “the Commerce”
+
+
+
 Lint:    Miscellaneous (31 priority)
 Message: |
      212 | 3. To establish an uniform Rule of Naturalization, and uniform Laws on the subject
          |                 ^~ Incorrect indefinite article.
 Suggest:
   - Replace with: “a”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     215 | 4. To coin Money, regulate the Value thereof, and of foreign Coin, and fix the
+         |            ^~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Money”
+  - Replace with: “the Money”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     221 | 6. To establish Post Offices and post Roads;
+         |                 ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Post”
+  - Replace with: “the Post”
 
 
 
@@ -587,6 +660,16 @@ Message: |
 Suggest:
   - Replace with: “Offenses”
   - Replace with: “Fences”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     232 | 10. To declare War, grant Letters of Marque and Reprisal, and make Rules concerning
+         |                ^~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a War”
+  - Replace with: “the War”
 
 
 
@@ -874,6 +957,16 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     360 | elect shall have died, the Vice President elect shall become President. If a
+         |                                                              ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a President”
+  - Replace with: “the President”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      360 | elect shall have died, the Vice President elect shall become President. If a
@@ -964,6 +1057,17 @@ Message: |
 
 
 
+Lint:    Miscellaneous (0 priority)
+Message: |
+     398 | than two years of a term to which some other person was elected President shall
+         |                                                                 ^~~~~~~~~ Consider adding an article before this noun.
+     399 | be elected to the office of the President more than once. But this article
+Suggest:
+  - Replace with: “a President”
+  - Replace with: “the President”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      399 | be elected to the office of the President more than once. But this article
@@ -978,6 +1082,38 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      404 | acting as President during the remainder of such term.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 65 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     402 | holding the office of President, or acting as President, during the term within
+     403 | which this article becomes operative from holding the office of President or
+         |                            ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “an operative”
+  - Replace with: “the operative”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     409 | death or resignation, the Vice President shall become President.
+         |                                                       ^~~~~~~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a President”
+  - Replace with: “the President”
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     412 | shall nominate a Vice President who shall take office upon confirmation by a
+         |                                                ^~~~~~ Consider adding an article before this noun.
+     413 | majority vote of both Houses of Congress.
+Suggest:
+  - Replace with: “an office”
+  - Replace with: “the office”
 
 
 
@@ -1266,6 +1402,16 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      511 | Commission all the Officers of the United States.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 97 words long.
+
+
+
+Lint:    Miscellaneous (0 priority)
+Message: |
+     510 | Ministers; he shall take Care that the Laws be faithfully executed, and shall
+         |                          ^~~~ Consider adding an article before this noun.
+Suggest:
+  - Replace with: “a Care”
+  - Replace with: “the Care”
 
 
 
