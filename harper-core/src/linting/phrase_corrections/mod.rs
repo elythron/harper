@@ -976,6 +976,12 @@ pub fn lint_group() -> LintGroup {
             "Prefer the standard term `wrought iron`.",
             "`Wrought iron` is low-carbon, malleable iron used for decorative work; variants like `rod iron` or `rot iron` are phonetic misspellings that may confuse readers."
         ),
+        "ItAn" => (
+            ["it an"],
+            ["it's an", "it is an"],
+            "Add the missing verb.",
+            "`it an` omits the copular verb; use **`it's an`** or **`it is an`** to supply `is` and keep the correct article before a vowel sound."
+        ),
     });
 
     group.set_all_rules_to(Some(true));

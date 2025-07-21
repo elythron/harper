@@ -1392,3 +1392,12 @@ fn corrects_rot_iron() {
 fn allows_wrought_iron() {
     assert_lint_count("She specialized in wrought iron artwork.", lint_group(), 0);
 }
+
+#[test]
+fn fixes_blog_post() {
+    assert_suggestion_result(
+        "It an efficient way to get from layer one to layer five.",
+        lint_group(),
+        "It is an efficient way to get from layer one to layer five.",
+    );
+}
