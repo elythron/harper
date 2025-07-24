@@ -1421,3 +1421,12 @@ fn fixes_teh() {
         "I adore the light of the moon.",
     );
 }
+
+#[test]
+fn as_is_compound_adjective_hyphenated() {
+    assert_suggestion_result(
+        "They sold the car on an as is basis.",
+        lint_group(),
+        "They sold the car on an as-is basis.",
+    );
+}
