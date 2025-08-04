@@ -42,6 +42,7 @@ use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::first_aid_kit::FirstAidKit;
 use super::for_noun::ForNoun;
+use super::friend_of_me::FriendOfMe;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -98,6 +99,7 @@ use super::somewhat_something::SomewhatSomething;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
+use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
@@ -118,7 +120,9 @@ use super::{CurrencyPlacement, HtmlDescriptionLinter, Linter, NoOxfordComma, Oxf
 use super::{ExprLinter, Lint};
 use crate::linting::dashes::Dashes;
 use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::{closed_compounds, initialisms, phrase_corrections, phrase_set_corrections};
+use crate::linting::{
+    MassPlurals, closed_compounds, initialisms, phrase_corrections, phrase_set_corrections,
+};
 use crate::spell::{Dictionary, MutableDictionary};
 use crate::{CharString, Dialect, Document, TokenStringExt};
 
@@ -423,6 +427,7 @@ impl LintGroup {
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FirstAidKit, true);
         insert_struct_rule!(ForNoun, true);
+        insert_expr_rule!(FriendOfMe, true);
         insert_expr_rule!(HavePronoun, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(Hereby, true);
@@ -474,6 +479,7 @@ impl LintGroup {
         insert_expr_rule!(SomewhatSomething, true);
         insert_struct_rule!(Spaces, true);
         insert_struct_rule!(SpelledNumbers, false);
+        insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
         insert_struct_rule!(TheMy, true);
@@ -517,6 +523,9 @@ impl LintGroup {
 
         out.add("HaveTakeALook", HaveTakeALook::new(dialect));
         out.config.set_rule_enabled("HaveTakeALook", true);
+
+        out.add("MassPlurals", MassPlurals::new(dictionary.clone()));
+        out.config.set_rule_enabled("MassPlurals", true);
 
         out
     }

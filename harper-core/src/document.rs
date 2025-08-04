@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, brill_chunker, brill_tagger};
+use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use paste::paste;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
@@ -140,33 +140,37 @@ impl Document {
         self.condense_filename_extensions();
         self.match_quotes();
 
-        let token_strings: Vec<_> = self
-            .tokens
-            .iter()
-            .filter(|t| !t.kind.is_whitespace())
-            .map(|t| self.get_span_content_str(&t.span))
-            .collect();
+        let chunker = burn_chunker();
+        let tagger = brill_tagger();
 
-        let token_tags = brill_tagger().tag_sentence(&token_strings);
-        let np_flags = brill_chunker().chunk_sentence(&token_strings, &token_tags);
+        for sent in self.tokens.iter_sentences_mut() {
+            let token_strings: Vec<_> = sent
+                .iter()
+                .filter(|t| !t.kind.is_whitespace())
+                .map(|t| t.span.get_content_string(&self.source))
+                .collect();
 
-        let mut i = 0;
+            let token_tags = tagger.tag_sentence(&token_strings);
+            let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
-        // Annotate word metadata
-        for token in self.tokens.iter_mut() {
-            if let TokenKind::Word(meta) = &mut token.kind {
-                let word_source = token.span.get_content(&self.source);
-                let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+            let mut i = 0;
 
-                if let Some(inner) = &mut found_meta {
-                    inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());
-                    inner.np_member = Some(np_flags[i]);
+            // Annotate word metadata
+            for token in sent.iter_mut() {
+                if let TokenKind::Word(meta) = &mut token.kind {
+                    let word_source = token.span.get_content(&self.source);
+                    let mut found_meta = dictionary.get_word_metadata(word_source).cloned();
+
+                    if let Some(inner) = &mut found_meta {
+                        inner.pos_tag = token_tags[i].or_else(|| inner.infer_pos_tag());
+                        inner.np_member = Some(np_flags[i]);
+                    }
+
+                    *meta = found_meta;
+                    i += 1;
+                } else if !token.kind.is_whitespace() {
+                    i += 1;
                 }
-
-                *meta = found_meta;
-                i += 1;
-            } else if !token.kind.is_whitespace() {
-                i += 1;
             }
         }
     }
@@ -575,22 +579,23 @@ impl Document {
         let mut ext_start = None;
 
         loop {
-            let a = self.get_token_offset(cursor, -2);
-            let b = &self.tokens[cursor - 1];
-            let c = &self.tokens[cursor];
-            let d = self.get_token_offset(cursor, 1);
+            // left context, dot, extension, right context
+            let l = self.get_token_offset(cursor, -2);
+            let d = &self.tokens[cursor - 1];
+            let x = &self.tokens[cursor];
+            let r = self.get_token_offset(cursor, 1);
 
-            let is_ext_chunk = a.is_none_or(|t| t.kind.is_whitespace())
-                && b.kind.is_period()
-                && c.kind.is_word()
-                && c.span.len() <= 3
-                && d.is_none_or(|t| t.kind.is_whitespace())
-                && if d.is_none_or(|t| t.kind.is_whitespace()) {
-                    let ext_chars = c.span.get_content(&self.source);
+            let is_ext_chunk = d.kind.is_period()
+                && x.kind.is_word()
+                && x.span.len() <= 3
+                && ((l.is_none_or(|t| t.kind.is_whitespace())
+                    && r.is_none_or(|t| t.kind.is_whitespace()))
+                    || (l.is_some_and(|t| t.kind.is_open_round())
+                        && r.is_some_and(|t| t.kind.is_close_round())))
+                && {
+                    let ext_chars = x.span.get_content(&self.source);
                     ext_chars.iter().all(|c| c.is_ascii_lowercase())
                         || ext_chars.iter().all(|c| c.is_ascii_uppercase())
-                } else {
-                    false
                 };
 
             if is_ext_chunk {
@@ -657,7 +662,7 @@ impl Document {
     fn condense_contractions(&mut self) {
         let expr = Self::CONTRACTION_EXPR.with(|v| v.clone());
 
-        self.condense_expr(&expr, |_| {});
+        self.condense_expr(&expr, |_| {})
     }
 }
 
@@ -743,6 +748,10 @@ impl TokenStringExt for Document {
 
     fn iter_sentences(&self) -> impl Iterator<Item = &'_ [Token]> + '_ {
         self.tokens.iter_sentences()
+    }
+
+    fn iter_sentences_mut(&mut self) -> impl Iterator<Item = &'_ mut [Token]> + '_ {
+        self.tokens.iter_sentences_mut()
     }
 }
 
@@ -973,5 +982,16 @@ mod tests {
         assert!(doc.tokens[0].kind.is_unlintable());
         assert!(doc.tokens[4].kind.is_punctuation());
         assert!(doc.tokens[5].kind.is_word());
+    }
+
+    #[test]
+    fn condense_filename_extension_in_parens() {
+        let doc = Document::new_plain_english_curated(
+            "true for the manual installation when trying to run the executable(.exe) after a manual download",
+        );
+        assert!(doc.tokens.len() > 23);
+        assert!(doc.tokens[21].kind.is_open_round());
+        assert!(doc.tokens[22].kind.is_unlintable());
+        assert!(doc.tokens[23].kind.is_close_round());
     }
 }

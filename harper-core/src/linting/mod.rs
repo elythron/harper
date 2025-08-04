@@ -36,6 +36,7 @@ mod few_units_of_time_ago;
 mod filler_words;
 mod first_aid_kit;
 mod for_noun;
+mod friend_of_me;
 mod have_pronoun;
 mod have_take_a_look;
 mod hedging;
@@ -64,6 +65,7 @@ mod long_sentences;
 mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
+mod mass_plurals;
 mod merge_linters;
 mod merge_words;
 mod missing_preposition;
@@ -111,6 +113,7 @@ mod spell_check;
 mod spelled_numbers;
 mod suggestion;
 mod take_serious;
+mod that_than;
 mod that_which;
 mod the_how_why;
 mod the_my;
@@ -159,6 +162,7 @@ pub use expr_linter::ExprLinter;
 pub use few_units_of_time_ago::FewUnitsOfTimeAgo;
 pub use filler_words::FillerWords;
 pub use for_noun::ForNoun;
+pub use friend_of_me::FriendOfMe;
 pub use have_pronoun::HavePronoun;
 pub use have_take_a_look::HaveTakeALook;
 pub use hedging::Hedging;
@@ -183,6 +187,7 @@ pub use long_sentences::LongSentences;
 pub use looking_forward_to::LookingForwardTo;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+pub use mass_plurals::MassPlurals;
 pub use merge_words::MergeWords;
 pub use missing_preposition::MissingPreposition;
 pub use modal_of::ModalOf;
@@ -223,6 +228,7 @@ pub use spell_check::SpellCheck;
 pub use spelled_numbers::SpelledNumbers;
 pub use suggestion::Suggestion;
 pub use take_serious::TakeSerious;
+pub use that_than::ThatThan;
 pub use that_which::ThatWhich;
 pub use the_how_why::TheHowWhy;
 pub use the_my::TheMy;
@@ -273,11 +279,29 @@ where
 
 #[cfg(test)]
 pub mod tests {
+    use crate::{Document, Span, Token, parsers::PlainEnglish};
     use hashbrown::HashSet;
+
+    /// Extension trait for converting spans of tokens back to their original text
+    pub trait SpanVecExt {
+        fn to_strings(&self, doc: &Document) -> Vec<String>;
+    }
+
+    impl SpanVecExt for Vec<Span<Token>> {
+        fn to_strings(&self, doc: &Document) -> Vec<String> {
+            self.iter()
+                .map(|sp| {
+                    doc.get_tokens()[sp.start..sp.end]
+                        .iter()
+                        .map(|tok| doc.get_span_content_str(&tok.span))
+                        .collect::<String>()
+                })
+                .collect()
+        }
+    }
 
     use super::Linter;
     use crate::spell::FstDictionary;
-    use crate::{Document, parsers::PlainEnglish};
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter) {

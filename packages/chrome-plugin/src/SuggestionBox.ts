@@ -22,14 +22,27 @@ FocusHook.prototype.hook = function (node, _propertyName, _previousValue) {
 	});
 };
 
-function header(title: string, color: string): any {
+function header(title: string, color: string, onClose: () => void): any {
+	const closeButton = h(
+		'button',
+		{
+			className: 'harper-close-btn',
+			onclick: onClose,
+			title: 'Close',
+			'aria-label': 'Close',
+		},
+		'×',
+	);
+
+	const titleEl = h('span', {}, title);
+
 	return h(
 		'div',
 		{
 			className: 'harper-header',
 			style: { borderBottom: `2px solid ${color}` },
 		},
-		title,
+		[titleEl, closeButton],
 	);
 }
 
@@ -149,6 +162,8 @@ function styleTag() {
 		}
 		.harper-btn:hover{filter:brightness(0.92)}
 		.harper-btn:active{transform:scale(0.97)}
+		.harper-close-btn{background:transparent;border:none;cursor:pointer;font-size:20px;line-height:1;color:#57606a;padding:0 4px;}
+		.harper-close-btn:hover{color:#1f2328;}
 		.harper-child-cont{
 		  display:flex;
 		  flex-wrap:wrap;
@@ -162,6 +177,16 @@ function styleTag() {
 		  padding:2px;
 		  gap:16px
 		}
+
+    .fade-in {
+      animation: fadeIn 100ms ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
 		@media (prefers-color-scheme:dark){
 		  code{background-color:#1f2d3d;color:#c9d1d9}
 		  .harper-container{
@@ -176,6 +201,8 @@ function styleTag() {
 		    color:#c9d1d9
 		  }
 		  .harper-btn:hover{filter:brightness(1.15)}
+		  .harper-close-btn{color:#8b949e;}
+		  .harper-close-btn:hover{color:#e6edf3;}
 		  .harper-btn[style*="background: #2DA44E"]{background:#238636}
 		  .harper-btn[style*="background: #e5e5e5"]{
 		    background:#4b4b4b;
@@ -210,9 +237,9 @@ export default function SuggestionBox(box: IgnorableLintBox, close: () => void) 
 		left: `${left}px`,
 	};
 
-	return h('div', { className: 'harper-container', style: positionStyle }, [
+	return h('div', { className: 'harper-container fade-in', style: positionStyle }, [
 		styleTag(),
-		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind)),
+		header(box.lint.lint_kind_pretty, lintKindColor(box.lint.lint_kind), close),
 		body(box.lint.message_html),
 		footer(
 			suggestions(box.lint.suggestions, (v) => {

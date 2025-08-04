@@ -4,7 +4,7 @@ use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
-use strum::{EnumCount, VariantArray};
+use strum::{EnumCount as _, VariantArray as _};
 use strum_macros::{Display, EnumCount, EnumString, VariantArray};
 
 use std::convert::TryFrom;
@@ -616,6 +616,20 @@ impl WordMetadata {
                 degree: Some(Degree::Superlative)
             })
         )
+    }
+
+    // Degree::Positive is the default if degree is not marked in the dictionary.
+    pub fn is_positive_adjective(&self) -> bool {
+        match self.adjective {
+            Some(AdjectiveData {
+                degree: Some(Degree::Positive),
+            }) => true,
+            Some(AdjectiveData { degree: None }) => true,
+            Some(AdjectiveData {
+                degree: Some(degree),
+            }) => !matches!(degree, Degree::Comparative | Degree::Superlative),
+            _ => false,
+        }
     }
 
     // Determiner metadata queries
