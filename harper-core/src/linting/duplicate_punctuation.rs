@@ -1,5 +1,5 @@
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Document, Punctuation, Token, TokenKind};
+use crate::{Document, Punctuation, TokenKind};
 
 #[derive(Debug, Default)]
 pub struct DuplicatePunctuation;
