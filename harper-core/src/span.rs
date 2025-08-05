@@ -107,7 +107,7 @@ impl<T> Span<T> {
     /// Return an expanded span by either modifying [`Self::start`] or [`Self::end`] to include the target
     /// index.
     pub fn expanded_to_include(&self, target: usize) -> Self {
-        let mut clone = self.clone();
+        let mut clone = *self;
         clone.expand_to_include(target);
         clone
     }
