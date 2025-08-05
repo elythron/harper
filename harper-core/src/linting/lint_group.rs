@@ -33,6 +33,7 @@ use super::despite_of::DespiteOf;
 use super::discourse_markers::DiscourseMarkers;
 use super::dot_initialisms::DotInitialisms;
 use super::double_modal::DoubleModal;
+use super::duplicate_punctuation::DuplicatePunctuation;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::everyday::Everyday;
@@ -410,6 +411,7 @@ impl LintGroup {
         insert_expr_rule!(BoringWords, false);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
         insert_expr_rule!(ChockFull, true);
+        insert_struct_rule!(DuplicatePunctuation, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_struct_rule!(CommaFixes, true);
         insert_struct_rule!(CompoundNouns, true);
