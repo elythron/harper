@@ -1,8 +1,48 @@
-use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Document, Punctuation, TokenKind};
+use std::collections::HashSet;
 
+use crate::{
+    Document, Punctuation, Span, TokenKind,
+    linting::{Lint, LintKind, Linter, Suggestion},
+};
+
+/// Flags clusters of punctuation that should be collapsed to a single mark
+/// (e.g. `!!`, `?!?`, `//`, `.,`, `; :`, etc.).
 #[derive(Debug, Default)]
 pub struct DuplicatePunctuation;
+
+impl DuplicatePunctuation {
+    /// Punctuation kinds we’re willing to condense.
+    fn is_candidate(kind: &TokenKind) -> bool {
+        matches!(
+            kind,
+            TokenKind::Punctuation(
+                Punctuation::Comma
+                    | Punctuation::Semicolon
+                    | Punctuation::Colon
+                    | Punctuation::ForwardSlash
+                    | Punctuation::Bang
+                    | Punctuation::Question
+                    | Punctuation::Period
+                    | Punctuation::Ampersand
+            )
+        )
+    }
+
+    /// Map a candidate punctuation token to its canonical char.
+    fn char_of(kind: &TokenKind) -> char {
+        match kind {
+            TokenKind::Punctuation(Punctuation::Comma) => ',',
+            TokenKind::Punctuation(Punctuation::Semicolon) => ';',
+            TokenKind::Punctuation(Punctuation::Colon) => ':',
+            TokenKind::Punctuation(Punctuation::ForwardSlash) => '/',
+            TokenKind::Punctuation(Punctuation::Bang) => '!',
+            TokenKind::Punctuation(Punctuation::Question) => '?',
+            TokenKind::Punctuation(Punctuation::Period) => '.',
+            TokenKind::Punctuation(Punctuation::Ampersand) => '&',
+            _ => unreachable!("`char_of` called on non-candidate punctuation"),
+        }
+    }
+}
 
 impl Linter for DuplicatePunctuation {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
@@ -11,96 +51,63 @@ impl Linter for DuplicatePunctuation {
         let mut i = 0;
 
         while i < toks.len() {
-            if let TokenKind::Punctuation(p0) = toks[i].kind {
-                if is_interest(p0) {
-                    let start = i;
-                    let mut end = i;
-                    let mut kinds = vec![p0];
-                    let mut j = i + 1;
-                    while j < toks.len() {
-                        match toks[j].kind {
-                            TokenKind::Space(_) | TokenKind::Newline(_) => {
-                                j += 1;
-                                continue;
-                            }
-                            TokenKind::Punctuation(p) if in_same_group(p0, p) => {
-                                kinds.push(p);
-                                end = j;
-                                j += 1;
-                                continue;
-                            }
-                            _ => break,
-                        }
+            // Start of a potential cluster
+            if !Self::is_candidate(&toks[i].kind) {
+                i += 1;
+                continue;
+            }
+
+            let start = i;
+            let mut end = i;
+            let mut uniq = HashSet::<char>::new();
+
+            // Consume the cluster (allowing spaces/newlines in between)
+            while i < toks.len() {
+                match &toks[i].kind {
+                    k if Self::is_candidate(k) => {
+                        uniq.insert(Self::char_of(k));
+                        end = i;
+                        i += 1;
                     }
-                    if kinds.len() > 1 {
-                        let span = toks[start].span.expanded_to_include(toks[end].span.end - 1);
-                        lints.push(Lint {
-                            span,
-                            lint_kind: LintKind::Punctuation,
-                            suggestions: build_suggestions(&kinds),
-                            message: "Remove duplicate or mixed punctuation.".to_owned(),
-                            priority: 63,
-                        });
+                    TokenKind::Space(_) | TokenKind::Newline(_) => {
+                        end = i;
+                        i += 1;
                     }
-                    i = end + 1;
-                    continue;
+                    _ => break,
                 }
             }
-            i += 1;
+
+            // How many candidate tokens were there?
+            let count = (start..=end)
+                .filter(|idx| Self::is_candidate(&toks[*idx].kind))
+                .count();
+
+            if count >= 2 {
+                let span = Span::new(toks[start].span.start, toks[end].span.end);
+
+                // One suggestion per distinct glyph in the cluster
+                let suggestions = uniq
+                    .into_iter()
+                    .map(|c| Suggestion::ReplaceWith(vec![c]))
+                    .collect::<Vec<_>>();
+
+                lints.push(Lint {
+                    span,
+                    lint_kind: LintKind::Formatting,
+                    suggestions,
+                    message: "Condense this punctuation cluster to a single mark.".into(),
+                    priority: 63,
+                });
+            }
         }
+
         lints
     }
 
     fn description(&self) -> &str {
-        "Flags duplicate or mixed punctuation sequences."
-    }
-}
-
-fn is_interest(p: Punctuation) -> bool {
-    matches!(
-        p,
-        Punctuation::Comma
-            | Punctuation::Semicolon
-            | Punctuation::Colon
-            | Punctuation::Bang
-            | Punctuation::Question
-            | Punctuation::ForwardSlash
-            | Punctuation::Ampersand
-    )
-}
-
-fn in_same_group(first: Punctuation, next: Punctuation) -> bool {
-    match first {
-        Punctuation::Bang | Punctuation::Question => {
-            matches!(next, Punctuation::Bang | Punctuation::Question)
-        }
-        _ => first == next,
-    }
-}
-
-fn build_suggestions(seq: &[Punctuation]) -> Vec<Suggestion> {
-    use Punctuation::*;
-    let mut opts = match seq[0] {
-        Bang | Question => vec![Bang, Question],
-        other => vec![other],
-    };
-    opts.dedup();
-    opts.into_iter()
-        .map(|p| Suggestion::ReplaceWith(vec![punct_char(p)]))
-        .collect()
-}
-
-fn punct_char(p: Punctuation) -> char {
-    use Punctuation::*;
-    match p {
-        Comma => ',',
-        Semicolon => ';',
-        Colon => ':',
-        Bang => '!',
-        Question => '?',
-        ForwardSlash => '/',
-        Ampersand => '&',
-        _ => unreachable!(),
+        "Detects consecutive or mixed punctuation marks that should be reduced \
+         to a single comma, semicolon, colon, slash, question mark, \
+         exclamation mark, period, or ampersand."
     }
 }
 
@@ -193,5 +200,40 @@ mod tests {
     #[test]
     fn flags_with_intervening_whitespace() {
         assert_lint_count("Why?! ?", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_double_ampersand() {
+        assert_lint_count("This && that.", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_period_comma_cluster() {
+        assert_lint_count("Oops., excuse me.", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_colon_comma_cluster() {
+        assert_lint_count("Delay:, we must wait.", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_semicolon_colon_cluster() {
+        assert_lint_count("Choices;: A or B.", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_comma_period_cluster() {
+        assert_lint_count("Hold on,. actually…", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_question_period_cluster() {
+        assert_lint_count("Really?.", DuplicatePunctuation, 1);
+    }
+
+    #[test]
+    fn flags_bang_period_cluster() {
+        assert_lint_count("Stop!.", DuplicatePunctuation, 1);
     }
 }
