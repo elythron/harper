@@ -8,9 +8,9 @@ use crate::{
 /// Flags clusters of punctuation that should be collapsed to a single mark
 /// (e.g. `!!`, `?!?`, `//`, `.,`, `; :`, etc.).
 #[derive(Debug, Default)]
-pub struct DuplicatePunctuation;
+pub struct PunctuationClusters;
 
-impl DuplicatePunctuation {
+impl PunctuationClusters {
     /// Punctuation kinds we’re willing to condense.
     fn is_candidate(kind: &TokenKind) -> bool {
         matches!(
@@ -44,7 +44,7 @@ impl DuplicatePunctuation {
     }
 }
 
-impl Linter for DuplicatePunctuation {
+impl Linter for PunctuationClusters {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let toks = document.get_tokens();
         let mut lints = Vec::new();
@@ -115,125 +115,125 @@ impl Linter for DuplicatePunctuation {
 mod tests {
     use crate::linting::tests::assert_lint_count;
 
-    use super::DuplicatePunctuation;
+    use super::PunctuationClusters;
 
     #[test]
     fn flags_double_comma() {
-        assert_lint_count("Wait,, what happened?", DuplicatePunctuation, 1);
+        assert_lint_count("Wait,, what happened?", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_semicolon() {
-        assert_lint_count("He hesitated;; then spoke.", DuplicatePunctuation, 1);
+        assert_lint_count("He hesitated;; then spoke.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_colon() {
-        assert_lint_count("Choices:: A or B.", DuplicatePunctuation, 1);
+        assert_lint_count("Choices:: A or B.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_bang() {
-        assert_lint_count("Stop!!", DuplicatePunctuation, 1);
+        assert_lint_count("Stop!!", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_question() {
-        assert_lint_count("Really??", DuplicatePunctuation, 1);
+        assert_lint_count("Really??", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_mixed_qbang_pair() {
-        assert_lint_count("What?!", DuplicatePunctuation, 1);
+        assert_lint_count("What?!", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_triple_bang() {
-        assert_lint_count("No!!! Absolutely not.", DuplicatePunctuation, 1);
+        assert_lint_count("No!!! Absolutely not.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_q_bang_bang() {
-        assert_lint_count("Really?!!", DuplicatePunctuation, 1);
+        assert_lint_count("Really?!!", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_slash() {
-        assert_lint_count("This // is a typo.", DuplicatePunctuation, 1);
+        assert_lint_count("This // is a typo.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_triple_slash() {
-        assert_lint_count("Path error: ///tmp.", DuplicatePunctuation, 1);
+        assert_lint_count("Path error: ///tmp.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_triple_question() {
-        assert_lint_count("Why???", DuplicatePunctuation, 1);
+        assert_lint_count("Why???", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_quadruple_bang() {
-        assert_lint_count("Stop!!!!", DuplicatePunctuation, 1);
+        assert_lint_count("Stop!!!!", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_question_bang_question() {
-        assert_lint_count("You did what?!?", DuplicatePunctuation, 1);
+        assert_lint_count("You did what?!?", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_bang_question_bang() {
-        assert_lint_count("No way!?!", DuplicatePunctuation, 1);
+        assert_lint_count("No way!?!", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_question_bang_bang_question() {
-        assert_lint_count("Seriously?!!?", DuplicatePunctuation, 1);
+        assert_lint_count("Seriously?!!?", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_slash_run_inside_sentence() {
-        assert_lint_count("Comment // still visible.", DuplicatePunctuation, 1);
+        assert_lint_count("Comment // still visible.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_with_intervening_whitespace() {
-        assert_lint_count("Why?! ?", DuplicatePunctuation, 1);
+        assert_lint_count("Why?! ?", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_double_ampersand() {
-        assert_lint_count("This && that.", DuplicatePunctuation, 1);
+        assert_lint_count("This && that.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_period_comma_cluster() {
-        assert_lint_count("Oops., excuse me.", DuplicatePunctuation, 1);
+        assert_lint_count("Oops., excuse me.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_colon_comma_cluster() {
-        assert_lint_count("Delay:, we must wait.", DuplicatePunctuation, 1);
+        assert_lint_count("Delay:, we must wait.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_semicolon_colon_cluster() {
-        assert_lint_count("Choices;: A or B.", DuplicatePunctuation, 1);
+        assert_lint_count("Choices;: A or B.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_comma_period_cluster() {
-        assert_lint_count("Hold on,. actually…", DuplicatePunctuation, 1);
+        assert_lint_count("Hold on,. actually…", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_question_period_cluster() {
-        assert_lint_count("Really?.", DuplicatePunctuation, 1);
+        assert_lint_count("Really?.", PunctuationClusters, 1);
     }
 
     #[test]
     fn flags_bang_period_cluster() {
-        assert_lint_count("Stop!.", DuplicatePunctuation, 1);
+        assert_lint_count("Stop!.", PunctuationClusters, 1);
     }
 }
