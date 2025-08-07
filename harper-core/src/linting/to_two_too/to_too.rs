@@ -25,7 +25,6 @@ impl Default for ToToo {
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
             .then_optional(AnyPattern)
-            .then_optional(AnyPattern)
             .or(SequenceExpr::default()
                 .t_aco("to")
                 .then(AnchorEnd)
@@ -48,10 +47,18 @@ impl ExprLinter for ToToo {
         let original = span.get_content(source);
 
         for i in 2..matched_tokens.len() {
-            if let Some(tok) = matched_tokens.get(i)
-                && tok.kind.is_np_member()
-            {
-                return None;
+            if let Some(tok) = matched_tokens.get(i) {
+                if tok
+                    .kind
+                    .as_word()
+                    .and_then(|m| Some(m.as_ref()?.pos_tag))
+                    .is_some_and(|tag| tag == Some(UPOS::ADP))
+                {
+                    break;
+                }
+                if tok.kind.is_np_member() {
+                    return None;
+                }
             }
         }
 
