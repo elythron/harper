@@ -1,9 +1,9 @@
 use harper_brill::UPOS;
 
+use crate::Token;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
