@@ -311,4 +311,36 @@ mod tests {
             ToTwoToo::default(),
         );
     }
+
+    #[test]
+    fn no_lint_familiarize() {
+        assert_no_lints(
+            "Familiarize yourself with these resources to learn how to effectively utilize the plugin’s features.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_mapping_commands() {
+        assert_no_lints(
+            "Mapping Telescope commands to custom keybindings significantly improves workflow.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_great_deal_of_energy() {
+        assert_no_lints(
+            "It takes a great deal of energy to consistently operate under that kind of pressure.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_occasionally_troubleshoot() {
+        assert_no_lints(
+            "Just be prepared to occasionally troubleshoot the debugger itself.",
+            ToTwoToo::default(),
+        );
+    }
 }
