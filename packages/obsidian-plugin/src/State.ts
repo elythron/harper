@@ -121,10 +121,14 @@ export default class State {
 					}
 				}
 
-				const text = view.state.doc.sliceString(-1);
-				const chars = toArray(text);
+				const text = view.state.doc.sliceString(0); // Use 0 to get the whole doc
+				if (shouldIgnoreNote(text)) {
+					return [];
+				}
 
+				const chars = toArray(text);
 				const lints = await this.harper.lint(text);
+
 
 				return lints.map((lint) => {
 					const span = lint.span();
@@ -289,4 +293,12 @@ function suggestionToLabel(sug: Suggestion) {
 	} else if (sug.kind() === SuggestionKind.InsertAfter) {
 		return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
+}
+
+/** Checks if the note contains a frontmatter property to ignore Harper. */
+function shouldIgnoreNote(text: string): boolean {
+    const match = text.match(/^---\s*([\s\S]*?)\s*---/);
+    if (!match) return false;
+    const frontmatter = match[1];
+    return /^harper-ignore:\s*true\s*$/m.test(frontmatter);
 }
